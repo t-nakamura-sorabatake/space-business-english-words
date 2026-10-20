@@ -11,8 +11,8 @@
 <meta property="og:site_name" content="宙畑 Sorabatake">
 <meta property="og:title" content="宇宙ビジネス英単語1000">
 <meta property="og:description" content="宇宙業界の英単語1000語を、例文つきカード・4択クイズ・10/50/100問テストで学べる無料アプリ。正答率に応じて称号がもらえます。">
-<meta property="og:url" content="https://YOUR-NAME.github.io/space-vocab-1000/">
-<meta property="og:image" content="https://YOUR-NAME.github.io/space-vocab-1000/ogp.png">
+<meta property="og:url" content="https://t-nakamura-sorabatake.github.io/space-business-english-words/">
+<meta property="og:image" content="https://t-nakamura-sorabatake.github.io/space-business-english-words/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="ja_JP">
@@ -37,7 +37,7 @@ img{max-width:100%}
 /* Layout: app header with mode tabs → filter bar → one working panel (list / card / quiz / progress). Rank is the spine: S A B C bands colour-coded. */
 :root{
   --bg:#f3f6f9; --surface:#ffffff; --sunk:#e8eef3; --fg:#122230; --muted:#5a6a78; --line:#d7e0e7;
-  --accent:#0089a3; --accent-ink:#ffffff; --star:#c99a00;
+  --accent:#0089a3; --accent-ink:#ffffff; --star:#c99a00; --candy:#e85d8f;
   --good:#1f8a5b; --bad:#c2410c;
   --rS:#d4a400; --rA:#0089a3; --rB:#5b6bd6; --rC:#7a8794;
   --display:"Zen Kaku Gothic New","IBM Plex Sans JP","Hiragino Sans",sans-serif;
@@ -46,11 +46,11 @@ img{max-width:100%}
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0a121a; --surface:#111d28; --sunk:#0d1821; --fg:#e3ebf1; --muted:#8fa1b0; --line:#22323f;
-  --accent:#35c9e4; --accent-ink:#06222a; --star:#efcd42; --good:#4cc38a; --bad:#f08a5d;
+  --accent:#35c9e4; --accent-ink:#06222a; --star:#efcd42; --candy:#ff8fab; --good:#4cc38a; --bad:#f08a5d;
   --rS:#efcd42; --rA:#35c9e4; --rB:#97a3ff; --rC:#9aa8b4; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0a121a; --surface:#111d28; --sunk:#0d1821; --fg:#e3ebf1; --muted:#8fa1b0; --line:#22323f;
-  --accent:#35c9e4; --accent-ink:#06222a; --star:#efcd42; --good:#4cc38a; --bad:#f08a5d;
+  --accent:#35c9e4; --accent-ink:#06222a; --star:#efcd42; --candy:#ff8fab; --good:#4cc38a; --bad:#f08a5d;
   --rS:#efcd42; --rA:#35c9e4; --rB:#97a3ff; --rC:#9aa8b4; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.6}
@@ -163,6 +163,50 @@ ul.words .note{grid-column:3/-1;font-size:12.5px;color:var(--muted);margin-top:-
 .sharetext{width:100%;font:inherit;font-size:13px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--sunk);color:var(--fg);resize:vertical;min-height:84px}
 .copied{font-size:12px;color:var(--good);min-height:1em;text-align:center}
 @media (max-width:480px){.tsizes{grid-template-columns:1fr}}
+/* result card */
+.rcard{position:relative;overflow:hidden;border-radius:24px;padding:22px 20px 18px;display:grid;gap:16px;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--tier) 38%,var(--surface)) 0%,var(--surface) 58%);border:2px solid color-mix(in srgb,var(--tier) 70%,var(--line))}
+.rhead{display:flex;justify-content:space-between;gap:10px}
+.rkick{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.rhero{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:center}
+.ricon{flex:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.12))}
+.rtitle{display:grid;gap:4px;min-width:0;flex:1 1 220px}
+.lv{justify-self:start;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--fg);color:var(--bg);border-radius:999px;padding:2px 10px}
+.tn{font-family:var(--display);font-size:clamp(24px,5.4vw,32px);line-height:1.2;text-wrap:balance;word-break:keep-all;overflow-wrap:anywhere}
+.te{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--accent)}
+.td{margin:4px 0 0;font-size:14px;color:var(--fg)}
+.rbody{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}
+.gauge{flex:none;max-width:100%}
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;flex:1 1 240px}
+.chip2{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.chip2 svg{grid-row:1/3}
+.chip2 b{font-family:var(--mono);font-size:20px;line-height:1.1;font-variant-numeric:tabular-nums}
+.chip2 b small{font-size:13px;color:var(--muted)}
+.chip2 span{font-size:12px;color:var(--muted)}
+.chip2.c1{color:var(--good)}.chip2.c2{color:var(--accent)}.chip2.c3{color:var(--star)}.chip2.c4{color:var(--candy)}
+.chip2 b,.chip2 span{color:var(--fg)}.chip2 span{color:var(--muted)}
+.nextmsg{text-align:center;font-size:14px;background:var(--surface);border:1px dashed color-mix(in srgb,var(--tier) 80%,var(--line));border-radius:12px;padding:8px 12px}
+.nextmsg b{color:var(--candy);font-size:16px}
+.ladder2{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.ladder2 span{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--surface);border:2px solid var(--line);filter:grayscale(1);opacity:.45}
+.ladder2 span.got{filter:none;opacity:.9}
+.ladder2 span.now{filter:none;opacity:1;border-color:var(--fg);transform:scale(1.12)}
+.rfoot{text-align:center;font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.confetti{position:absolute;inset:0;pointer-events:none}
+.confetti i{position:absolute;top:-12px;border-radius:2px;opacity:0}
+h2.sec svg{vertical-align:-3px;color:var(--accent)}
+.share button svg,.share a svg{flex:none}
+@media (prefers-reduced-motion:no-preference){
+  .ricon{animation:pop .7s cubic-bezier(.2,1.4,.4,1) both}
+  .ricon svg{animation:float 3.2s ease-in-out .8s infinite}
+  .gauge .arc{animation:fill 1.1s ease-out both}
+  .confetti i{animation:fall 2.6s ease-in forwards}
+}
+@keyframes pop{from{transform:scale(.3) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes float{50%{transform:translateY(-5px)}}
+@keyframes fill{from{stroke-dashoffset:var(--c)}}
+@keyframes fall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(520px) rotate(540deg)}}
+@media (max-width:480px){.ladder2{gap:4px}.ladder2 span{width:34px;height:34px}.ladder2 span svg{width:28px;height:28px}.chips{grid-template-columns:1fr 1fr}.rhero{text-align:center}.lv{justify-self:center}}
 /* progress */
 .bands{display:grid;gap:12px}
 .band{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px}
@@ -409,15 +453,38 @@ const PAGE_URL = (location.origin + location.pathname).replace(/index\.html$/, "
 const SHARE_URL = SITE_URL || PAGE_URL;
 const IS_PUBLIC = !!SITE_URL || (/^https?:$/.test(location.protocol) && !/(claude|anthropic|usercontent|localhost|127\.0\.0\.1)/.test(location.hostname));
 const TITLES = [
-  [100,"宇宙ビジネス英語 ミッションコマンダー","MISSION COMMANDER","全問正解。英語の宇宙ニュースも契約書も、もう怖くありません。"],
-  [90,"フライトディレクター","FLIGHT DIRECTOR","業界の英語をほぼ完璧に使いこなせるレベルです。"],
-  [80,"宇宙飛行士","ASTRONAUT","英語の宇宙ニュースを辞書なしで読み進められる実力です。"],
-  [65,"ミッションスペシャリスト","MISSION SPECIALIST","主要な用語はしっかり身についています。苦手分野を固めれば次の称号へ。"],
-  [50,"フライトコントローラー","FLIGHT CONTROLLER","基礎は押さえています。カードで間違えた単語を復習しましょう。"],
-  [30,"宇宙飛行士候補生","ASTRONAUT CANDIDATE","訓練はここから。Sランクの200語から覚えるのが近道です。"],
-  [0,"カウントダウン中","COUNTDOWN","打ち上げ前の準備段階。まずはカードで単語に慣れましょう。"]
+  [100,"宇宙ビジネス英語 ミッションコマンダー","MISSION COMMANDER","全問正解！英語の宇宙ニュースも契約書も、もう怖くありません。","cmd","#ffd76a"],
+  [90,"フライトディレクター","FLIGHT DIRECTOR","業界の英語をほぼ完璧に使いこなせるレベル。月面着陸、成功です。","dir","#c9b8ff"],
+  [80,"宇宙飛行士","ASTRONAUT","英語の宇宙ニュースを辞書なしで読み進められる実力です。","ast","#9fe3f0"],
+  [65,"ミッションスペシャリスト","MISSION SPECIALIST","主要な用語はしっかり身についています。苦手分野を固めれば次の称号へ。","spc","#a8ecc8"],
+  [50,"フライトコントローラー","FLIGHT CONTROLLER","基礎は押さえています。カードで間違えた単語を復習しましょう。","ctl","#ffc9a8"],
+  [30,"宇宙飛行士候補生","ASTRONAUT CANDIDATE","訓練はここから。Sランクの200語から覚えるのが近道です。","cnd","#ffb8cf"],
+  [0,"カウントダウン中","COUNTDOWN","打ち上げ前の準備段階。まずはカードで単語に慣れましょう。","cdn","#cfd8e3"]
 ];
 const titleFor = pct => TITLES.find(t=>pct>=t[0]);
+const levelOf = t => TITLES.length - TITLES.indexOf(t);
+
+/* オリジナルの称号イラスト（120×120） */
+const ICON_SVG = {
+cdn:`<circle cx="60" cy="60" r="56" fill="#cfd8e3"/><ellipse cx="34" cy="96" rx="16" ry="8" fill="#fff" opacity=".9"/><ellipse cx="86" cy="98" rx="18" ry="8" fill="#fff" opacity=".9"/><rect x="40" y="96" width="40" height="8" rx="3" fill="#7a8794"/><path d="M60 22c12 10 15 28 13 48H47c-2-20 1-38 13-48z" fill="#fff" stroke="#3b4a57" stroke-width="3" stroke-linejoin="round"/><circle cx="60" cy="48" r="7" fill="#9fe3f0" stroke="#3b4a57" stroke-width="3"/><path d="M47 62l-9 12h10M73 62l9 12H72" fill="#ff8fab" stroke="#3b4a57" stroke-width="3" stroke-linejoin="round"/><path d="M52 74h16v8H52z" fill="#7a8794"/><text x="60" y="18" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="600" text-anchor="middle" fill="#3b4a57">3·2·1</text>`,
+cnd:`<circle cx="60" cy="60" r="56" fill="#ffb8cf"/><circle cx="60" cy="58" r="32" fill="#fff" stroke="#3b4a57" stroke-width="3"/><rect x="38" y="44" width="44" height="30" rx="15" fill="#2f3f66"/><circle cx="51" cy="58" r="3.5" fill="#fff"/><circle cx="69" cy="58" r="3.5" fill="#fff"/><path d="M54 65q6 5 12 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M44 50q4-4 10-3" stroke="#9fe3f0" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M60 92l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z" fill="#ffd76a" stroke="#3b4a57" stroke-width="2" stroke-linejoin="round"/>`,
+ctl:`<circle cx="60" cy="60" r="56" fill="#ffc9a8"/><rect x="30" y="42" width="60" height="40" rx="6" fill="#2f3f66" stroke="#3b4a57" stroke-width="3"/><ellipse cx="60" cy="62" rx="20" ry="9" fill="none" stroke="#9fe3f0" stroke-width="2" stroke-dasharray="4 3"/><circle cx="60" cy="62" r="5" fill="#9fe3f0"/><circle cx="78" cy="59" r="3" fill="#ffd76a"/><rect x="52" y="82" width="16" height="8" fill="#7a8794"/><rect x="42" y="90" width="36" height="6" rx="3" fill="#7a8794"/><path d="M28 50a32 32 0 0 1 64 0" fill="none" stroke="#3b4a57" stroke-width="4"/><rect x="20" y="46" width="12" height="18" rx="5" fill="#ff8fab" stroke="#3b4a57" stroke-width="3"/><rect x="88" y="46" width="12" height="18" rx="5" fill="#ff8fab" stroke="#3b4a57" stroke-width="3"/>`,
+spc:`<circle cx="60" cy="60" r="56" fill="#a8ecc8"/><rect x="14" y="44" width="28" height="22" rx="3" fill="#5b6bd6" stroke="#3b4a57" stroke-width="3"/><rect x="78" y="44" width="28" height="22" rx="3" fill="#5b6bd6" stroke="#3b4a57" stroke-width="3"/><path d="M14 55h28M28 44v22M78 55h28M92 44v22" stroke="#9fe3f0" stroke-width="1.5"/><path d="M42 55h8M70 55h8" stroke="#3b4a57" stroke-width="3"/><rect x="48" y="40" width="24" height="30" rx="6" fill="#ffd76a" stroke="#3b4a57" stroke-width="3"/><circle cx="60" cy="50" r="4" fill="#fff"/><path d="M60 40v-10" stroke="#3b4a57" stroke-width="3"/><circle cx="60" cy="27" r="4" fill="#ff8fab" stroke="#3b4a57" stroke-width="2"/><path d="M70 84l14 14m-4-20a8 8 0 0 0-10 10l16 16 6-6-16-16a8 8 0 0 0 4-4z" fill="#fff" stroke="#3b4a57" stroke-width="3" stroke-linejoin="round"/>`,
+ast:`<circle cx="60" cy="60" r="56" fill="#9fe3f0"/><path d="M38 108c0-20 10-30 22-30s22 10 22 30" fill="#fff" stroke="#3b4a57" stroke-width="3"/><rect x="52" y="86" width="16" height="10" rx="2" fill="#ff8fab"/><path d="M82 90q14-8 16-24" fill="none" stroke="#3b4a57" stroke-width="9" stroke-linecap="round"/><path d="M82 90q14-8 16-24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="98" cy="62" r="6" fill="#fff" stroke="#3b4a57" stroke-width="3"/><circle cx="60" cy="52" r="28" fill="#fff" stroke="#3b4a57" stroke-width="3"/><rect x="40" y="38" width="40" height="28" rx="14" fill="#2f3f66"/><circle cx="52" cy="51" r="3.5" fill="#fff"/><circle cx="68" cy="51" r="3.5" fill="#fff"/><path d="M54 58q6 5 12 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="47" cy="58" r="3" fill="#ff8fab" opacity=".8"/><circle cx="73" cy="58" r="3" fill="#ff8fab" opacity=".8"/>`,
+dir:`<circle cx="60" cy="60" r="56" fill="#c9b8ff"/><circle cx="60" cy="68" r="34" fill="#f1ecdf" stroke="#3b4a57" stroke-width="3"/><circle cx="46" cy="60" r="6" fill="#ddd5c2"/><circle cx="72" cy="80" r="8" fill="#ddd5c2"/><circle cx="74" cy="56" r="4" fill="#ddd5c2"/><path d="M58 50V18" stroke="#3b4a57" stroke-width="3" stroke-linecap="round"/><path d="M58 20h26l-6 8 6 8H58z" fill="#ff8fab" stroke="#3b4a57" stroke-width="3" stroke-linejoin="round"/><circle cx="68" cy="28" r="3" fill="#fff"/><path d="M22 26l2 5 5 1-4 3 1 5-4-3-4 3 1-5-4-3 5-1z M100 92l1.5 3.5 3.5.5-3 2.5 1 3.5-3-2-3 2 1-3.5-3-2.5 3.5-.5z" fill="#ffd76a"/>`,
+cmd:`<circle cx="60" cy="60" r="56" fill="#ffd76a"/><path d="M18 102q20-10 32-30" stroke="#ff8fab" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M24 106q22-8 32-28" stroke="#9fe3f0" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M14 96q20-12 30-32" stroke="#c9b8ff" stroke-width="6" fill="none" stroke-linecap="round"/><g transform="rotate(40 66 54)"><path d="M66 18c12 10 15 28 13 48H53c-2-20 1-38 13-48z" fill="#fff" stroke="#3b4a57" stroke-width="3" stroke-linejoin="round"/><circle cx="66" cy="42" r="7" fill="#9fe3f0" stroke="#3b4a57" stroke-width="3"/><path d="M53 58l-9 12h10M79 58l9 12H78" fill="#ff8fab" stroke="#3b4a57" stroke-width="3" stroke-linejoin="round"/><path d="M58 8l4 6 4-8 4 8 4-6v10H58z" fill="#ffd76a" stroke="#3b4a57" stroke-width="2.5" stroke-linejoin="round" transform="translate(-0 -2)"/></g><path d="M98 22l2 5 5 1-4 3 1 5-4-3-4 3 1-5-4-3 5-1z M24 30l1.5 3.5 3.5.5-3 2.5 1 3.5-3-2-3 2 1-3.5-3-2.5 3.5-.5z" fill="#fff"/>`
+};
+const icon = (k, size) => `<svg viewBox="0 0 120 120" width="${size}" height="${size}" aria-hidden="true">${ICON_SVG[k]}</svg>`;
+const UI_ICON = {
+  check:`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".18"/><path d="M7 12.5l3.2 3L17 9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  clock:`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".18"/><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8.5V12l2.5 1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  stack:`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".18"/><path d="M7 9h10M7 12h10M7 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  trophy:`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".18"/><path d="M8.5 6.5h7v3a3.5 3.5 0 0 1-7 0zM12 13v3M9.5 17.5h5M8.5 8H6.5a2 2 0 0 0 2 3M15.5 8h2a2 2 0 0 1-2 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  share:`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="6" cy="12" r="2.5" fill="currentColor"/><circle cx="17" cy="6" r="2.5" fill="currentColor"/><circle cx="17" cy="18" r="2.5" fill="currentColor"/><path d="M8 11l7-4M8 13l7 4" stroke="currentColor" stroke-width="1.8"/></svg>`,
+  image:`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="10" r="1.8" fill="currentColor"/><path d="M5 17l5-5 4 4 2-2 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
+  copy:`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 0 1 2-2h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
+};
+
 S.best = S.best || {};
 let T=null;
 function startTest(n){
@@ -448,7 +515,7 @@ function renderTest(){
     document.querySelectorAll(".choice").forEach(x=>{ x.disabled=true; if(+x.dataset.r===w.rank) x.classList.add("correct"); });
     if(ok){ T.score++; S.known[w.rank]=1; } else { b.classList.add("wrong"); S.wrong[w.rank]=(S.wrong[w.rank]||0)+1; delete S.known[w.rank]; }
     save(); updateHead();
-    setTimeout(()=>{ T.locked=false; T.i++; if(T.i>=T.n){ T.done=true; T.secs=Math.round((Date.now()-T.t0)/1000); const pct=Math.round(T.score/T.n*100); if(!S.best[T.n]||pct>S.best[T.n]) S.best[T.n]=pct; save(); } renderTest(); }, ok?550:1100);
+    setTimeout(()=>{ T.locked=false; T.i++; if(T.i>=T.n){ T.done=true; T.secs=Math.round((Date.now()-T.t0)/1000); const pct=Math.round(T.score/T.n*100); T.newBest = S.best[T.n]==null || pct>S.best[T.n]; if(T.newBest) S.best[T.n]=pct; save(); } renderTest(); }, ok?550:1100);
   });
 }
 function renderTestSetup(){
@@ -463,33 +530,114 @@ function renderTestSetup(){
 }
 function shareText(){
   const pct=Math.round(T.score/T.n*100), t=titleFor(pct);
-  return `宇宙ビジネス英単語1000の${T.n}問テストで${T.score}/${T.n}問正解（正答率${pct}%）、称号「${t[1]}」を獲得しました！ #宙畑 #宇宙ビジネス英単語`;
+  return `🚀 宇宙ビジネス英単語1000の${T.n}問テストに挑戦！\n正答率${pct}%（${T.score}/${T.n}問）で、称号「${t[1]}」を獲得しました✨\nあなたは何問わかる？ #宙畑 #宇宙ビジネス英単語`;
 }
+
+function gauge(pct){
+  const r=70, c=2*Math.PI*r, a=(pct/100)*2*Math.PI - Math.PI/2;
+  const x=90+r*Math.cos(a), y=90+r*Math.sin(a);
+  return `<svg class="gauge" viewBox="0 0 180 180" width="180" height="180" role="img" aria-label="正答率${pct}%">
+    <circle cx="90" cy="90" r="${r}" fill="none" stroke="var(--sunk)" stroke-width="12"/>
+    <circle class="arc" cx="90" cy="90" r="${r}" fill="none" stroke="url(#gg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct/100)}" transform="rotate(-90 90 90)" style="--c:${c}"/>
+    <defs><linearGradient id="gg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--candy)"/></linearGradient></defs>
+    ${pct>0?`<g transform="translate(${x} ${y})"><circle r="11" fill="var(--surface)" stroke="var(--accent)" stroke-width="2.5"/><path d="M-4 3l8-8M-1 -5h6v6" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>`:""}
+    <text x="90" y="92" text-anchor="middle" font-family="var(--mono)" font-size="40" font-weight="600" fill="var(--fg)">${pct}<tspan font-size="20">%</tspan></text>
+    <text x="90" y="118" text-anchor="middle" font-size="12" fill="var(--muted)">正答率</text></svg>`;
+}
+
+function confetti(n){
+  const cols=["var(--accent)","var(--candy)","var(--star)","#a8ecc8","#c9b8ff"];
+  let h=""; for(let i=0;i<n;i++){ const l=Math.random()*100, d=Math.random()*1.2, s=6+Math.random()*8, r=Math.random()*360;
+    h+=`<i style="left:${l}%;animation-delay:${d}s;width:${s}px;height:${s*0.45}px;background:${cols[i%cols.length]};transform:rotate(${r}deg)"></i>`; }
+  return `<div class="confetti" aria-hidden="true">${h}</div>`;
+}
+
 function renderTestResult(){
-  const pct=Math.round(T.score/T.n*100), t=titleFor(pct), txt=shareText();
+  const pct=Math.round(T.score/T.n*100), t=titleFor(pct), lv=levelOf(t), txt=shareText();
   const misses=T.qs.filter(q=>q.picked!==q.w.rank);
   const mm=Math.floor(T.secs/60), ss=T.secs%60;
+  const idx=TITLES.indexOf(t), next=idx>0?TITLES[idx-1]:null;
+  const needQ = next ? Math.max(1, Math.ceil(next[0]/100*T.n) - T.score) : 0;
+  const xUrl=`https://twitter.com/intent/tweet?text=${encodeURIComponent(txt)}&url=${encodeURIComponent(SHARE_URL)}`;
+  const fbUrl=`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SHARE_URL)}`;
+  const lnUrl=`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(txt)}`;
   $("view").innerHTML=`<div class="qbox">
-    <div class="cert"><span class="tl">${T.n}問テスト 結果</span>
-      <div class="pct">${pct}%</div><div class="meta">${T.score} / ${T.n}問正解・${mm}分${String(ss).padStart(2,"0")}秒</div>
-      <div class="title">${esc(t[1])}<small>${t[2]}</small></div>
-      <div class="desc">${esc(t[3])}</div>
-      <div class="ladder">${TITLES.slice().reverse().map(x=>`<span class="${x===t?"on":""}">${esc(x[1])}</span>`).join("")}</div></div>
-    <h2 class="sec" style="text-align:center;margin:6px 0 0">結果をシェアする</h2>
+    <div class="rcard" style="--tier:${t[5]}">
+      ${pct>=80?confetti(36):""}
+      <div class="rhead"><span class="rkick">MISSION REPORT</span><span class="rkick">${T.n}問テスト</span></div>
+      <div class="rhero">
+        <div class="ricon">${icon(t[4],132)}</div>
+        <div class="rtitle"><span class="lv">Lv.${lv} / ${TITLES.length}</span>
+          <div class="tn">${esc(t[1])}</div><div class="te">${t[2]}</div>
+          <p class="td">${esc(t[3])}</p></div>
+      </div>
+      <div class="rbody">
+        ${gauge(pct)}
+        <div class="chips">
+          <div class="chip2 c1">${UI_ICON.check}<b>${T.score}<small>/${T.n}</small></b><span>正解</span></div>
+          <div class="chip2 c2">${UI_ICON.clock}<b>${mm}:${String(ss).padStart(2,"0")}</b><span>タイム</span></div>
+          <div class="chip2 c3">${UI_ICON.trophy}<b>${S.best[T.n]}%</b><span>${T.newBest?"自己ベスト更新！":"自己ベスト"}</span></div>
+          <div class="chip2 c4">${UI_ICON.stack}<b>${misses.length}</b><span>復習する単語</span></div>
+        </div>
+      </div>
+      <div class="nextmsg">${next?`次の称号「${esc(next[1])}」まで、あと<b>${needQ}問</b>正解！`:"最高位の称号です。おめでとうございます！"}</div>
+      <div class="ladder2" aria-label="称号の段階">${TITLES.slice().reverse().map(x=>`<span class="${x===t?"now":TITLES.indexOf(x)>idx?"got":""}" title="${esc(x[1])}">${icon(x[4],34)}</span>`).join("")}</div>
+      <div class="rfoot">宇宙ビジネス英単語1000　|　宙畑 Sorabatake</div>
+    </div>
+
+    <h2 class="sec" style="text-align:center;margin:8px 0 0">${UI_ICON.share} 結果をシェアする</h2>
     <div class="share">
-      <a class="x" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(txt)}&url=${encodeURIComponent(SHARE_URL)}" target="_blank" rel="noopener">Xでポスト</a>
-      <a class="fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SHARE_URL)}" target="_blank" rel="noopener">Facebookでシェア</a>
-      <a class="line" href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">LINEで送る</a>
-      <button type="button" id="copyBtn">文面をコピー</button></div>
-    <textarea class="sharetext" id="shareTxt" readonly aria-label="シェア用の文面">${esc(txt+" "+SHARE_URL)}</textarea>
+      <a class="x" href="${xUrl}" target="_blank" rel="noopener">Xでポスト</a>
+      <a class="fb" href="${fbUrl}" target="_blank" rel="noopener">Facebook</a>
+      <a class="line" href="${lnUrl}" target="_blank" rel="noopener">LINE</a>
+    </div>
+    <div class="share">
+      <button type="button" id="imgBtn">${UI_ICON.image} 結果画像を保存・シェア</button>
+      <button type="button" id="copyBtn">${UI_ICON.copy} 文面をコピー</button>
+    </div>
     <div class="copied" id="copied" aria-live="polite"></div>
-    <p class="tnote">Facebookは文面を自動で入れられないため、「文面をコピー」してから貼り付けてください。</p>${IS_PUBLIC?"":`<p class="tnote" style="color:var(--bad)">このページはまだGitHub Pagesで公開されていないため、シェアされるリンクは仮のものです。公開後はページのURLが自動で使われます。</p>`}
+    <textarea class="sharetext" id="shareTxt" readonly aria-label="シェア用の文面">${esc(txt+"\n"+SHARE_URL)}</textarea>
+    <p class="tnote">結果画像は、スマートフォンではそのまま共有メニューが開き、パソコンでは画像ファイルとして保存されます。Facebookは文面を自動で入れられないため、コピーして貼り付けてください。</p>
+    ${IS_PUBLIC?"":`<p class="tnote" style="color:var(--bad)">このページはまだGitHub Pagesで公開されていないため、シェアされるリンクと画像の保存は公開後に正しく動きます。</p>`}
     <div class="actions"><button class="btn primary" id="tagain" type="button">もう一度${T.n}問テスト</button><button class="btn" id="tback" type="button">問題数を選び直す</button></div>
-    ${misses.length?`<h2 class="sec">間違えた単語（${misses.length}語）　カードの「間違えた順」で復習できます</h2><div class="misses">${misses.map(q=>`<div><span class="rk ${band(q.w.rank)}">${band(q.w.rank)}</span><strong>${esc(q.w.en)}</strong><span>${esc(q.w.ja)}</span></div>`).join("")}</div>`:""}
+    ${misses.length?`<h2 class="sec">間違えた単語（${misses.length}語）　カードの「間違えた順」で復習できます</h2><div class="misses">${misses.map(q=>`<div><span class="rk ${band(q.w.rank)}">${band(q.w.rank)}</span><strong>${esc(q.w.en)}</strong>${posTag(q.w)}<span>${esc(q.w.ja)}</span></div>`).join("")}</div>`:""}
   </div>`;
   $("copyBtn").onclick=async()=>{ const ta=$("shareTxt"); try{ await navigator.clipboard.writeText(ta.value); $("copied").textContent="コピーしました"; }catch(e){ ta.focus(); ta.select(); $("copied").textContent="文面を選択しました。長押しまたは Ctrl+C でコピーしてください"; } };
+  $("imgBtn").onclick=()=>shareImage(pct,t);
   $("tagain").onclick=()=>startTest(T.n);
   $("tback").onclick=()=>{ T=null; renderTestSetup(); };
+}
+
+/* シェア用の結果画像（1200×630）を作る */
+function loadSvg(svg){ return new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=rej; im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg); }); }
+async function shareImage(pct,t){
+  const msg=$("copied"); msg.textContent="画像を作成しています…";
+  try{
+    try{ await document.fonts.ready; }catch(e){}
+    const c=document.createElement("canvas"); c.width=1200; c.height=630; const g=c.getContext("2d");
+    const bg=g.createLinearGradient(0,0,1200,630); bg.addColorStop(0,"#101c2a"); bg.addColorStop(1,"#1c2147"); g.fillStyle=bg; g.fillRect(0,0,1200,630);
+    for(let i=0;i<70;i++){ g.fillStyle=`rgba(255,255,255,${.2+Math.random()*.6})`; g.beginPath(); g.arc(Math.random()*1200,Math.random()*630,Math.random()*1.8+.4,0,7); g.fill(); }
+    g.strokeStyle="rgba(159,227,240,.25)"; g.lineWidth=2; g.beginPath(); g.ellipse(300,330,250,120,-.25,0,7); g.stroke();
+    const ic=await loadSvg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="360" height="360">${ICON_SVG[t[4]]}</svg>`);
+    g.drawImage(ic,120,150,360,360);
+    const D='"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif', M='"IBM Plex Mono",monospace';
+    g.fillStyle="#9fe3f0"; g.font=`600 26px ${M}`; g.fillText(`MISSION REPORT · ${T.n}問テスト`,560,120);
+    g.fillStyle="#ffffff"; g.font=`700 ${t[1].length>12?48:60}px ${D}`; g.fillText(t[1],560,205);
+    g.fillStyle=t[5]; g.font=`600 24px ${M}`; g.fillText(`${t[2]}  ·  Lv.${levelOf(t)}/${TITLES.length}`,560,248);
+    g.fillStyle="#ffd76a"; g.font=`600 150px ${M}`; g.fillText(`${pct}%`,552,410);
+    g.fillStyle="#cfd8e3"; g.font=`500 32px ${D}`; g.fillText(`${T.score} / ${T.n}問正解`,560,465);
+    g.fillStyle="rgba(255,255,255,.12)"; g.fillRect(560,500,520,2);
+    g.fillStyle="#ffffff"; g.font=`700 30px ${D}`; g.fillText("宇宙ビジネス英単語1000",560,555);
+    g.fillStyle="#9fe3f0"; g.font=`500 22px ${D}`; g.fillText("宙畑 Sorabatake　あなたは何問わかる？",560,592);
+    const blob=await new Promise(r=>c.toBlob(r,"image/png"));
+    const file=new File([blob],`space-vocab-${T.n}-${pct}.png`,{type:"image/png"});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file], text:shareText()+"\n"+SHARE_URL}); msg.textContent="共有メニューを開きました"; return; }catch(e){ if(e&&e.name==="AbortError"){ msg.textContent=""; return; } }
+    }
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=file.name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+    msg.textContent="画像を保存しました。SNSの投稿に添付してください";
+  }catch(e){ msg.textContent="画像を作成できませんでした。このページを公開先（GitHub Pages）で開いてお試しください"; }
 }
 
 function render(reset){
